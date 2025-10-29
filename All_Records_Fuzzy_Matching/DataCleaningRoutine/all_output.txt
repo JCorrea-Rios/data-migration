@@ -1,0 +1,95 @@
+Based on the requirements, we will need the following core classes, functions, and methods:
+
+1. `sanitize.py`: This will be the main script that will read the company names from the input file, sanitize them according to the rules, and write the sanitized names to the output file.
+
+2. `sanitize_company_name(name: str, rules: List[Dict[str, str]]) -> str`: This function will take a company name and a list of sanitization rules, apply the rules to the name, and return the sanitized name.
+
+3. `load_sanitization_rules(file_path: str) -> List[Dict[str, str]]`: This function will load the sanitization rules from a JSON file and return them as a list of dictionaries.
+
+4. `write_sanitized_names(names: List[str], file_path: str) -> None`: This function will write a list of sanitized company names to a file.
+
+5. `sanitize_all(names: List[str], rules: List[Dict[str, str]]) -> List[str]`: This function will sanitize all company names in a list using a list of sanitization rules.
+
+6. `remove_duplicates(names: List[str]) -> List[str]`: This function will remove duplicate company names from a list.
+
+7. `proper_case(name: str) -> str`: This function will convert a company name to proper case.
+
+Now, let's write the code for each of these components.
+
+sanitize.py
+```python
+import json
+import re
+from typing import List, Dict
+
+def sanitize_company_name(name: str, rules: List[Dict[str, str]]) -> str:
+    """Sanitize a company name according to a list of sanitization rules."""
+    for rule in rules:
+        pattern = rule['pattern']
+        replacement = rule['replacement']
+        name = re.sub(pattern, replacement, name)
+    return name.strip()
+
+def load_sanitization_rules(file_path: str) -> List[Dict[str, str]]:
+    """Load sanitization rules from a JSON file."""
+    with open(file_path, 'r') as file:
+        rules = json.load(file)
+    return rules
+
+def write_sanitized_names(names: List[str], file_path: str) -> None:
+    """Write a list of sanitized company names to a file."""
+    with open(file_path, 'w') as file:
+        for name in names:
+            file.write(name + '\n')
+
+def sanitize_all(names: List[str], rules: List[Dict[str, str]]) -> List[str]:
+    """Sanitize all company names in a list using a list of sanitization rules."""
+    return [sanitize_company_name(name, rules) for name in names]
+
+def remove_duplicates(names: List[str]) -> List[str]:
+    """Remove duplicate company names from a list."""
+    return list(set(names))
+
+def proper_case(name: str) -> str:
+    """Convert a company name to proper case."""
+    return name.title()
+
+def main():
+    # Load the sanitization rules
+    rules = load_sanitization_rules('files/rules.json')
+
+    # Load the company names
+    with open('files/company_names.txt', 'r') as file:
+        names = [line.strip().lower() for line in file]
+
+    # Sanitize the company names
+    names = sanitize_all(names, rules)
+
+    # Convert the company names to proper case
+    names = [proper_case(name) for name in names]
+
+    # Remove duplicates
+    names = remove_duplicates(names)
+
+    # Write the sanitized company names to a file
+    write_sanitized_names(names, 'files/sanitized_company_names.txt')
+
+if __name__ == '__main__':
+    main()
+```
+
+rules.json
+```json
+[
+    {"pattern": "PTY LTD", "replacement": ""},
+    {"pattern": "1", "replacement": ""},
+    {"pattern": "0.25% 20260801", "replacement": ""},
+    {"pattern": "\\(Some Text\\)", "replacement": ""},
+    {"pattern": "\\*\\* Some Text \\*\\*", "replacement": ""},
+    {"pattern": "#TEXT", "replacement": ""},
+    {"pattern": "0000000000 -", "replacement": ""},
+    {"pattern": "0000", "replacement": ""}
+]
+```
+
+Please note that the `rules.json` file should be placed in the `files` directory. The sanitization rules are represented as regular expressions, so they can be easily modified to handle different patterns.

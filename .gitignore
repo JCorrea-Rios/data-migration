@@ -1,0 +1,51 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+env/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data & Models (unless you want to track them)
+*.pkl
+*.duckdb
+*.csv
+*.xlsx
+!data/training_simple.pkl  # Example: whitelist specific files
+!data/training_hard_negatives.pkl
+!data/sanitization_rules.json  # Allow sanitization rules
+data/
+
+# Outputs
+output/*.csv
+output/*.xlsx
+!output/.gitkeep  # Keep the directory
+
+# Temporary files
+~$*.xlsx
+~$*.xls
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+
+# Experiments (keep code, ignore large outputs)
+All_Records_Fuzzy_Matching/**/*.pkl
+All_Records_Fuzzy_Matching/**/*.csv
+All_Records_Fuzzy_Matching/**/*.xlsx
+All_Records_Fuzzy_Matching/**/*.zip
+!All_Records_Fuzzy_Matching/DataCleaningRoutine/files/rules.json

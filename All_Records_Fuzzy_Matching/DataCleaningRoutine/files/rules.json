@@ -1,0 +1,176 @@
+[
+  {
+    "name": "remove_percentages",
+    "pattern": "\\d+\\.?\\d*%.*?\\b",
+    "replacement": "",
+    "note": "Remove percentages like '1.5%' or '51% owner'"
+  },
+  {
+    "name": "remove_dates",
+    "pattern": "\\d{1,2}/\\d{1,2}/\\d{2,4}",
+    "replacement": "",
+    "note": "Remove dates like 12/31/2023"
+  },
+  {
+    "name": "remove_long_numbers",
+    "pattern": "\\b\\d{4,}\\b",
+    "replacement": "",
+    "note": "Remove long numbers (4+ digits) like phone numbers, account numbers, years"
+  },
+  {
+    "name": "remove_leading_zz_marker",
+    "pattern": "^z{2,}\\s*",
+    "replacement": "",
+    "note": "Remove leading zz/zzz data quality markers"
+  },
+  {
+    "name": "remove_trailing_zz_marker",
+    "pattern": "\\s*z{2,}$",
+    "replacement": "",
+    "note": "Remove trailing zz/zzz data quality markers"
+  },
+  {
+    "name": "remove_product_location_metadata",
+    "pattern": "\\s*\\|.*$",
+    "replacement": "",
+    "note": "Remove product and location metadata after pipe character"
+  },
+  {
+    "name": "remove_parentheses",
+    "pattern": "\\s*\\([^)]*\\)",
+    "replacement": "",
+    "note": "Remove parentheses and their contents (geographic, abbreviations, etc.)"
+  },
+  {
+    "name": "normalize_dashes",
+    "pattern": "\\s+[-–—]\\s+",
+    "replacement": " ",
+    "note": "Replace dashes with spaces"
+  },
+  {
+    "name": "australian_proprietary_limited",
+    "pattern": "\\bproprietary\\s+limited\\b",
+    "replacement": "pty ltd",
+    "note": "Australian: Proprietary Limited → pty ltd"
+  },
+  {
+    "name": "australian_pty_ltd",
+    "pattern": "\\bpty\\.?\\s*ltd?\\.?\\b",
+    "replacement": "pty ltd",
+    "note": "Australian: standardise pty ltd variations"
+  },
+  {
+    "name": "australian_pl_shorthand",
+    "pattern": "\\bp/?l\\b\\.?",
+    "replacement": "pty ltd",
+    "note": "Australian: p/l → pty ltd"
+  },
+  {
+    "name": "singapore_pte_ltd",
+    "pattern": "\\bpte\\.?\\s*ltd?\\.?\\b",
+    "replacement": "pte ltd",
+    "note": "Singapore: Private Limited"
+  },
+  {
+    "name": "malaysia_sdn_bhd",
+    "pattern": "\\bsdn\\.?\\s*bhd\\.?\\b",
+    "replacement": "sdn bhd",
+    "note": "Malaysia/Brunei: Sendirian Berhad"
+  },
+  {
+    "name": "malaysia_bhd",
+    "pattern": "\\bbhd\\b\\.?",
+    "replacement": "bhd",
+    "note": "Malaysia: Berhad (public company)"
+  },
+  {
+    "name": "us_incorporated",
+    "pattern": "\\binc(?:orporated)?\\b\\.?",
+    "replacement": "inc",
+    "note": "US: Incorporated - period after word boundary"
+  },
+  {
+    "name": "us_llc",
+    "pattern": "\\bl\\.?l\\.?c\\.?\\b",
+    "replacement": "llc",
+    "note": "US: Limited Liability Company"
+  },
+  {
+    "name": "partnership_llp",
+    "pattern": "\\bl\\.?l\\.?p\\.?\\b",
+    "replacement": "llp",
+    "note": "Limited Liability Partnership"
+  },
+  {
+    "name": "uk_commonwealth_limited",
+    "pattern": "\\blimited\\b(?!\\s+(?:liability|partnership))",
+    "replacement": "ltd",
+    "note": "UK/Commonwealth: Limited (but not 'limited liability')"
+  },
+  {
+    "name": "remove_ltd_period",
+    "pattern": "\\bltd\\b\\.?",
+    "replacement": "ltd",
+    "note": "Remove optional period from ltd"
+  },
+  {
+    "name": "uk_public_company",
+    "pattern": "\\bplc\\b\\.?",
+    "replacement": "plc",
+    "note": "UK: Public Limited Company - period after word boundary"
+  },
+  {
+    "name": "europe_sa",
+    "pattern": "\\bs\\.?a\\.?\\b",
+    "replacement": "sa",
+    "note": "Europe/Latin America: Société Anonyme"
+  },
+  {
+    "name": "europe_srl",
+    "pattern": "\\bs\\.?r\\.?l\\.?\\b",
+    "replacement": "srl",
+    "note": "Europe/Latin America: Limited Liability"
+  },
+  {
+    "name": "german_gmbh",
+    "pattern": "\\bgmbh\\b\\.?",
+    "replacement": "gmbh",
+    "note": "Germany/Austria: Limited Liability"
+  },
+  {
+    "name": "german_ag",
+    "pattern": "\\baktiengesellschaft\\b",
+    "replacement": "ag",
+    "note": "Germany/Austria: Stock Corporation"
+  },
+  {
+    "name": "asian_co_ltd_format",
+    "pattern": "\\bco\\.?,?\\s*ltd\\.?",
+    "replacement": "company ltd",
+    "note": "Asian format: Co., Ltd → company ltd"
+  },
+  {
+    "name": "asian_co_limited_format",
+    "pattern": "\\bco\\.?,?\\s*limited\\b",
+    "replacement": "company ltd",
+    "note": "Asian format: Co. Limited → company ltd"
+  },
+  {
+    "name": "expand_co_to_company",
+    "pattern": "\\b(?<!pty\\s)(?<!pte\\s)(?<!&\\s)co\\b\\.?(?!\\s*ltd)(?!\\s*kg)",
+    "replacement": "company",
+    "note": "Expand 'co' to 'company' (but not 'pty co' or '& co')"
+  },
+  {
+    "name": "expand_corp_to_corporation",
+    "pattern": "\\bcorp\\b\\.?(?!\\s*(?:pty|ltd))",
+    "replacement": "corporation",
+    "note": "Expand 'corp' to 'corporation'"
+  },
+  {
+    "name": "normalize_spaces",
+    "pattern": "\\s+",
+    "replacement": " ",
+    "note": "Normalize multiple spaces to single space"
+  }
+]

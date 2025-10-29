@@ -1,9 +1,9 @@
 [
   {
     "name": "remove_percentages",
-    "pattern": "\\d+\\.?\\d*%.*?\\b",
+    "pattern": "\\d+(?:\\.\\d+)?%\\s+(?=\\d)",
     "replacement": "",
-    "note": "Remove percentages like '1.5%' or '51% owner'"
+    "note": "Remove percentages only before numbers (coupon rates), preserves brand phrases like '100% Pure'"
   },
   {
     "name": "remove_dates",
@@ -12,10 +12,22 @@
     "note": "Remove dates like 12/31/2023"
   },
   {
-    "name": "remove_long_numbers",
-    "pattern": "\\b\\d{4,}\\b",
+    "name": "remove_dates_iso",
+    "pattern": "\\b\\d{4}-\\d{2}-\\d{2}\\b",
     "replacement": "",
-    "note": "Remove long numbers (4+ digits) like phone numbers, account numbers, years"
+    "note": "Remove ISO dates like 2023-12-31"
+  },
+  {
+    "name": "remove_dates_european",
+    "pattern": "\\b\\d{1,2}[-.]\\d{1,2}[-.]\\d{2,4}\\b",
+    "replacement": "",
+    "note": "Remove European dates like 31-12-2023 or 31.12.2023"
+  },
+  {
+    "name": "remove_long_numbers",
+    "pattern": "\\b\\d{4,}\\b(?!\\s*(?:series|model|type|version))",
+    "replacement": "",
+    "note": "Remove long numbers (4+ digits) but preserve brand identifiers like 'Series 5000'"
   },
   {
     "name": "remove_leading_zz_marker",
@@ -25,9 +37,9 @@
   },
   {
     "name": "remove_trailing_zz_marker",
-    "pattern": "\\s*z{2,}$",
+    "pattern": "\\s+z{2,}$",
     "replacement": "",
-    "note": "Remove trailing zz/zzz data quality markers"
+    "note": "Remove trailing zz/zzz data quality markers (requires space before, preserves 'radio 2zzz')"
   },
   {
     "name": "remove_product_location_metadata",
@@ -55,7 +67,7 @@
   },
   {
     "name": "australian_pty_ltd",
-    "pattern": "\\bpty\\.?\\s*ltd?\\.?\\b",
+    "pattern": "\\bpty\\.?\\s*ltd\\.?\\b",
     "replacement": "pty ltd",
     "note": "Australian: standardise pty ltd variations"
   },
@@ -67,7 +79,7 @@
   },
   {
     "name": "singapore_pte_ltd",
-    "pattern": "\\bpte\\.?\\s*ltd?\\.?\\b",
+    "pattern": "\\bpte\\.?\\s*ltd\\.?\\b",
     "replacement": "pte ltd",
     "note": "Singapore: Private Limited"
   },
@@ -166,6 +178,12 @@
     "pattern": "\\bcorp\\b\\.?(?!\\s*(?:pty|ltd))",
     "replacement": "corporation",
     "note": "Expand 'corp' to 'corporation'"
+  },
+  {
+    "name": "normalize_and_symbol",
+    "pattern": "\\s*&\\s*",
+    "replacement": " and ",
+    "note": "Convert ampersand to 'and' for consistency"
   },
   {
     "name": "normalize_spaces",
